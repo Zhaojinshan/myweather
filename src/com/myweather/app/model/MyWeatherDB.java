@@ -85,7 +85,7 @@ public class MyWeatherDB {
 			ContentValues values = new ContentValues();
 			values.put("city_name", city.getCityName());
 			values.put("city_code", city.getCityCode());
-			values.put("province", city.getProvinceId());
+			values.put("province_id", city.getProvinceId());
 			db.insert("City", null, values);
 		}
 	}
@@ -129,23 +129,23 @@ public class MyWeatherDB {
 	/**
 	 * 从数据库读取某城市下所有的县信息
 	 */
-	public List<County> loadCounties(int cityID){
+	public List<County> loadCounties(int cityId){
 		List<County> list = new ArrayList<County>();
 		Cursor cursor = db.query("County", null, "city_id = ?", 
-				new String[]{String.valueOf(cityID)}, null, null, null, null);
+				new String[]{String.valueOf(cityId)}, null, null, null);
 		if(cursor.moveToFirst()){
 			do {
 				County county = new County();
 				county.setId(cursor.getInt(cursor.getColumnIndex("id")));
 				county.setCountyName(cursor.getString(cursor.getColumnIndex("county_name")));
 				county.setCountyCode(cursor.getString(cursor.getColumnIndex("county_code")));
-				county.setCityId(cityID);
+				county.setCityId(cityId);
 				list.add(county);
 			} while (cursor.moveToNext());
 			if(cursor != null){
 				cursor.close();
 			}
 		}
-		return null;		
+		return list;		
 	}
 }
