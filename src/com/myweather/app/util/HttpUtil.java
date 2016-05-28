@@ -7,6 +7,10 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class HttpUtil {
+	
+	/**
+	 * 发送地址，将返回的值在回调onFinish()方法中返回
+	 */
 	public static void sendHttpRequest(final String address, final HttpCallbackListener listener){
 		new Thread(new Runnable() {
 			@Override
@@ -15,7 +19,7 @@ public class HttpUtil {
 				try{
 					URL url = new URL(address);
 					connection = (HttpURLConnection) url.openConnection();
-					connection.setRequestMethod("GET");
+					connection.setRequestMethod( "GET");
 					connection.setConnectTimeout(8000);
 					connection.setReadTimeout(8000);
 					InputStream in = connection.getInputStream();
