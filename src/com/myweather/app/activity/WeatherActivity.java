@@ -5,6 +5,7 @@ import com.myweather.app.service.AutoUpdateService;
 import com.myweather.app.util.HttpCallbackListener;
 import com.myweather.app.util.HttpUtil;
 import com.myweather.app.util.Utility;
+import com.myweather.app.view.SlidingMenu;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -54,12 +55,19 @@ public class WeatherActivity extends Activity implements OnClickListener{
 	 * 更新天气按钮
 	 */
 	private Button refreshWeather;
-	
+	/**
+	 * 菜单ID
+	 */
+	private SlidingMenu mLeftMenu;
+	/**
+	 * 切换菜单按钮
+	 */
+	private Button swichMenu;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		setContentView(R.layout.weather_layout);
+		setContentView(R.layout.mian_activity);
 		//初始化各控件
 		weatherInfoLayout = (LinearLayout) findViewById(R.id.weather_info_layout);
 		cityNameText = (TextView) findViewById(R.id.city_name);
@@ -70,6 +78,10 @@ public class WeatherActivity extends Activity implements OnClickListener{
 		currentDateText = (TextView) findViewById(R.id.current_date);
 		switchCity = (Button) findViewById(R.id.swich_city);
 		refreshWeather = (Button) findViewById(R.id.refresh_weather);
+		mLeftMenu = (SlidingMenu) findViewById(R.id.id_menu);
+		swichMenu =(Button) findViewById(R.id.select_menu);
+		
+		swichMenu.setOnClickListener(this);
 		switchCity.setOnClickListener(this);
 		refreshWeather.setOnClickListener(this);
 		String countyCode = getIntent().getStringExtra("county_code");
@@ -158,6 +170,9 @@ public class WeatherActivity extends Activity implements OnClickListener{
 			if(!TextUtils.isEmpty(weatherCode)){
 				queryWeatherCode(weatherCode);
 			}
+			break;
+		case R.id.select_menu:
+			mLeftMenu.toggle();
 		default:
 			break;
 		}
